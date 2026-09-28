@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uso de redes Sociais entre jovens - Pesquisa Interativa</title>
+    <!-- Tailwind CSS CDN para estilização ágil e moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN para graficos interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloundfrare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Estilo CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen pb-12">
+    <!-- Cabeçalho Principal -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold">
+                    <i class="fa-solid fa-chart-pie text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Redes Sociais & Jovens</h1>
+                    <p class="text-xs text-slate-400">Análise de Dados e Reflexão Crítica • Cetic.br / TIC Kids Online</p>
+                </div>
+            </div>
+            <div class="text-xs bg-slate-800 text-sky-400 px-3 py-1.5 rounded-full border border-slate-700">
+                <i class="fa-solid fa-code-branch mr-1"></i> Projeto Prático de Robótica / Tecnologia
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 mt-8 space-y-8">
+
+        <!-- Seção 1: Contexto e Destaques -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="gradient-card rounded-2xl p-6 relative overflow-hidden">
+                <div class="text-sky-400 text-sm font-semibold mb-2">Acesso à Internet</div>
+                <div class="text-4xl font-extrabold text-white mb-1">93%</div>
+                <p class="text-slate-400 text-xs">dos jovens de 9 a 17 anos no Brasil usam a internet diariamente.</p>
+            </div>
+            <div class="gradient-card rounded-2xl p-6 relative overflow-hidden">
+                <div class="text-indigo-400 text-sm font-semibold mb-2">Redes Sociais</div>
+                <div class="text-4xl font-extrabold text-white mb-1">83%</div>
+                <p class="text-slate-400 text-xs">possuem conta própria em plataformas digitais de interação.</p>
+            </div>
+            <div class="gradient-card rounded-2xl p-6 relative overflow-hidden">
+                <div class="text-emerald-400 text-sm font-semibold mb-2">Dispositivo Principal</div>
+                <div class="text-4xl font-extrabold text-white mb-1">98%</div>
+                <p class="text-slate-400 text-xs">acessam prioritariamente ou exclusivamente pelo smartphone.</p>
+            </div>
+        </section>
+
+        <!-- Seção 2: Dashboard de Gráficos e Filtros -->
+        <section class="gradient-card rounded-2xl p-6 md:p-8 space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Visualização Científica por Plataforma</h2>
+                    <p class="text-slate-400 text-sm">Selecione os filtros abaixo para explorar o percentual de uso e o tempo médio diário estimado.</p>
+                </div>
+               
+                <!-- Filtros Gerados Dinamicamente via JS -->
+                <div id="filtros" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Container do Gráfico Chart.js -->
+                <div class="lg:col-span-2 bg-slate-900/50 p-4 rounded-xl border border-slate-800 relative h-80">
+                    <canvas id="grafico"></canvas>
+                </div>
+
+                <!-- Painel Informativo da Plataforma Selecionada -->
+                <div id="painel-detalhe" class="bg-slate-900 p-6 rounded-xl border border-slate-800 flex flex-col justify-between h-full space-y-4">
+                    <div>
+                        <span id="detalhe-tag" class="text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-md">
+                            Plataforma
+                        </span>
+                        <h3 id="detalhe-nome" class="text-2xl font-bold text-white mt-3">Instagram</h3>
+                        <p id="detalhe-desc" class="text-slate-400 text-sm mt-2">
+                            Plataforma focada no compartilhamento de fotos, vídeos curtos e Reels. Muito popular entre adolescentes para interação social.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 border-t border-slate-800 pt-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Percentual de Uso:</span>
+                            <span id="detalhe-uso" class="font-bold text-white">76%</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Tempo Médio Diário:</span>
+                            <span id="detalhe-tempo" class="font-bold text-sky-400">95 minutos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Calculadora de Reflexão Crítica -->
+        <section class="gradient-card rounded-2xl p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-brain text-sky-400"></i> Reflexão Crítica: Seus Hábitos e os Dados
+                </h2>
+                <p class="text-slate-400 text-sm">Compare seu tempo diário de redes sociais com a média das pesquisas científicas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <label for="inputTempo" class="block text-sm font-semibold text-slate-300">
+                        Quanto tempo (em minutos) você estima que passa por dia em redes sociais?
+                    </label>
+                    <div class="flex gap-3">
+                        <input type="number" id="inputTempo" placeholder="Ex: 120" min="0" max="1440"
+                            class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 flex-1">
+                        <button id="btnAnalisar"
+                            class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition duration-200">
+                            Analisar
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-500">Média de referência da pesquisa: ~86 min/dia por plataforma.</p>
+                </div>
+
+                <div id="boxReflexao" class="bg-slate-900/80 p-6 rounded-xl border border-slate-800 min-h-[140px] flex items-center justify-center text-center">
+                    <p id="reflexao" class="text-slate-400 italic">
+                        Digite seu tempo diário acima e clique em "Analisar" para gerar uma comparação em tempo real.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LÓGICA JAVASCRIPT (Momento 2, 3 e 4 da Aula) -->
+    <script>
+        // MOMENTO 2: Estruturação dos Dados da Pesquisa em Array de Objetos
+        const dadosRedesSociais = [
+            { plataforma: "WhatsApp", percentualUso: 92, tempoMedioMin: 60, icone: "fa-whatsapp", cor: "#22c55e", desc: "Principal canal de comunicação rápida e troca de mensagens instantâneas entre jovens e famílias." },
+            { plataforma: "YouTube", percentualUso: 84, tempoMedioMin: 80, icone: "fa-youtube", cor: "#ef4444", desc: "Plataforma dominante no consumo de tutoriais, jogos, música e vídeos curtos." },
+            { plataforma: "Instagram", percentualUso: 76, tempoMedioMin: 95, icone: "fa-instagram", cor: "#e1306c", desc: "Rede focada na publicação de fotos, Stories e vídeos curtos de estilo de vida e entretenimento." },
+            { plataforma: "TikTok", percentualUso: 68, tempoMedioMin: 110, icone: "fa-tiktok", cor: "#06b6d4", desc: "Líder em retenção de atenção com algoritmos recomendadores de vídeos curtos." }
+        ];
+
+        let chartInstancia = null;
+
+        // MOMENTO 3: Manipulação do DOM e Inicialização do Chart.js
+        document.addEventListener("DOMContentLoaded", () => {
+            renderizarFiltros();
+            inicializarGrafico(dadosRedesSociais);
+            exibirDetalhe(dadosRedesSociais[0]);
+
+            // Evento do botão de análise reflexiva
+            document.getElementById("btnAnalisar").addEventListener("click", () => {
+                const minutos = parseInt(document.getElementById("inputTempo").value);
+                refletirSobreUso(minutos);
+            });
+        });
+
+        // Função para gerar botões dinâmicos com forEach
+        function renderizarFiltros() {
+            const containerFiltros = document.getElementById("filtros");
+            containerFiltros.innerHTML = "";
+
+            // Botão "Todos"
+            const btnTodos = document.createElement("button");
+            btnTodos.className = "px-3 py-1.5 text-xs font-semibold rounded-lg border bg-sky-500 text-slate-950 border-sky-400 transition";
+            btnTodos.innerText = "Todas as Redes";
+            btnTodos.onclick = () => {
+                atualizarBotoesAtivos(btnTodos);
+                inicializarGrafico(dadosRedesSociais);
+                exibirDetalhe({
+                    plataforma: "Visão Geral",
+                    percentualUso: 80,
+                    tempoMedioMin: 86,
+                    desc: "Dados consolidados de uso das quatro plataformas mais acessadas por jovens."
+                });
+            };
+            containerFiltros.appendChild(btnTodos);
+
+            // Botões por plataforma
+            dadosRedesSociais.forEach(item => {
+                const btn = document.createElement("button");
+                btn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg border bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-500 transition";
+                btn.innerText = item.plataforma;
+                btn.onclick = () => {
+                    atualizarBotoesAtivos(btn);
+                    inicializarGrafico([item]);
+                    exibirDetalhe(item);
+                };
+                containerFiltros.appendChild(btn);
+            });
+        }
+
+        function atualizarBotoesAtivos(btnAtivo) {
+            const botoes = document.querySelectorAll("#filtros button");
+            botoes.forEach(b => {
+                b.className = "px-3 py-1.5 text-xs font-semibold rounded-lg border bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-500 transition";
+            });
+            btnAtivo.className = "px-3 py-1.5 text-xs font-semibold rounded-lg border bg-sky-500 text-slate-950 border-sky-400 transition";
+        }
+
+        // Função para construir/atualizar gráfico com Chart.js
+        function inicializarGrafico(dados) {
+            const ctx = document.getElementById("grafico").getContext("2d");
+
+            if (chartInstancia) {
+                chartInstancia.destroy();
+            }
+
+            chartInstancia = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dados.map(d => d.plataforma),
+                    datasets: [
+                        {
+                            label: '% de Uso entre Jovens',
+                            data: dados.map(d => d.percentualUso),
+                            backgroundColor: dados.map(d => d.cor || '#38bdf8'),
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Tempo Médio (minutos/dia)',
+                            data: dados.map(d => d.tempoMedioMin),
+                            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                            borderColor: 'rgba(255, 255, 255, 0.4)',
+                            borderWidth: 1,
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1', font: { family: 'Plus Jakarta Sans' } } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#cbd5e1' }, grid: { color: '#334155' } },
+                        y: { ticks: { color: '#cbd5e1' }, grid: { color: '#334155' } }
+                    }
+                }
+            });
+        }
+
+        function exibirDetalhe(item) {
+            document.getElementById("detalhe-nome").innerText = item.plataforma;
+            document.getElementById("detalhe-desc").innerText = item.desc;
+            document.getElementById("detalhe-uso").innerText = item.percentualUso + "%";
+            document.getElementById("detalhe-tempo").innerText = item.tempoMedioMin + " minutos/dia";
+        }
+
+        // MOMENTO 4: Algoritmo de Reflexão Crítica
+        function refletirSobreUso(minutosDigitados) {
+            const box = document.getElementById("boxReflexao");
+            const reflexaoEl = document.getElementById("reflexao");
+
+            if (isNaN(minutosDigitados) || minutosDigitados < 0) {
+                reflexaoEl.innerHTML = "<span class='text-amber-400 font-semibold'>Por favor, insira um número válido de minutos.</span>";
+                return;
+            }
+
+            // Cálculo da média geral da pesquisa
+            const mediaGeral = dadosRedesSociais.reduce((acc, d) => acc + d.tempoMedioMin, 0) / dadosRedesSociais.length;
+            const horasDiarias = (minutosDigitados / 60).toFixed(1);
+
+            let mensagem = "";
+            let estilo = "";
+
+            if (minutosDigitados > mediaGeral + 30) {
+                estilo = "text-amber-400";
+                mensagem = `<strong>Atenção ao seu tempo:</strong> Você informou ${minutosDigitados} min (~${horasDiarias}h/dia). Isso está <strong>acima</strong> da média observada nas pesquisas (${Math.round(mediaGeral)} min/dia por rede). Reflita se esse tempo afeta seus estudos ou sono!`;
+            } else if (minutosDigitados >= mediaGeral - 20) {
+                estilo = "text-sky-300";
+                mensagem = `<strong>Dentro da Média:</strong> Seus ${minutosDigitados} min/dia estão <strong>alinhados</strong> com a média observada entre jovens na pesquisa (~${Math.round(mediaGeral)} min/dia). Mantendo o equilíbrio, você aproveita o melhor da rede!`;
+            } else {
+                estilo = "text-emerald-400";
+                mensagem = `<strong>Uso Moderado:</strong> Seus ${minutosDigitados} min/dia estão <strong>abaixo</strong> da média da pesquisa científica (~${Math.round(mediaGeral)} min/dia). Excelente sinal de controle e equilíbrio sobre seu tempo digital!`;
+            }
+
+            reflexaoEl.className = `text-sm leading-relaxed ${estilo}`;
+            reflexaoEl.innerHTML = mensagem;
+        }
+    </script>  
+</body>
+</html>
